@@ -307,6 +307,7 @@ namespace ProjectPoker.Models
                             p.Winner = false;
                         }
                         WinningPlayers = new List<IPlayer>();
+                        player.Winner = true;
                         WinningPlayers.Add(player);
                     }
                     else if (player.WinningCards.OrderBy(c => c.FaceValue).LastOrDefault().FaceValue ==
