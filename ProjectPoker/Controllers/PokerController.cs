@@ -29,7 +29,7 @@ namespace ProjectPoker.Controllers
             poker.AddNewPlayer(viewModel.Name);
             for (int i = 5; i < viewModel.AmountOfBots; i++)
             {
-                poker.AddNewBot("Computer " + i);
+                poker.AddNewBot("Computer " + (i+1));
             }
             poker.InitGame();
             Session["state"] = "Playing";
