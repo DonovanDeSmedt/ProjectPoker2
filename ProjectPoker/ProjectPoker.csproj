@@ -359,8 +359,8 @@
   </Target>
   <PropertyGroup>
     <PostBuildEvent>
-      if not exist "$(WebProjectOutputDir)\bin\Roslyn" md "$(WebProjectOutputDir)\bin\Roslyn"
-      start /MIN xcopy /s /y /R "$(OutDir)roslyn\*.*" "$(WebProjectOutputDir)\bin\Roslyn"
+      if not exist "D:\Users\apphb31694ff8e16239\app\_PublishedWebsites\ProjectPoker\bin\Roslyn" md "D:\Users\apphb31694ff8e16239\app\_PublishedWebsites\ProjectPoker\bin\Roslyn"
+      start /MIN xcopy /s /y /R "D:\Users\apphb31694ff8e16239\app\_PublishedWebsites\ProjectPokerroslyn\*.*" "D:\Users\apphb31694ff8e16239\app\_PublishedWebsites\ProjectPoker\bin\Roslyn"
     </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
