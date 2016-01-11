@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Poker.Poker" Collapsed="true">
+    <Position X="7.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABBAAAIEIACAAAYgQAAABAAgAAAAAABIAAAQAAA=</HashCode>
+      <FileName>Models\Poker.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Deck" />
+      <Property Name="Table" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Players" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Poker.Table" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <AssociationLine Name="Players" Type="ProjectPoker.IPlayer" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.5" Y="0.953" />
+        <Point X="5.75" Y="0.953" />
+        <Point X="5.75" Y="5.125" />
+        <Point X="4.875" Y="5.125" />
+        <Point X="4.875" Y="5.5" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAgQAAAAAAAAAAIAAAAAgABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Table.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Pokercards" />
+      <Property Name="Players" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Poker.PokerCard" Collapsed="true">
+    <Position X="1.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIACBAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\PokerCard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Poker.Deck" Collapsed="true">
+    <Position X="4" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAgAAAAAAAAAAAAAAABAAAAQAAAAAEAA=</HashCode>
+      <FileName>Models\Deck.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Pokercards" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="ProjectPoker.Models.ActivePlayer" Collapsed="true">
+    <Position X="5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEIAoAAgEAAIICAAAAQAUAAAAAABAAAAAAAgAAFAA=</HashCode>
+      <FileName>Models\ActivePlayer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ProjectPoker.Models.Bot" Collapsed="true">
+    <Position X="3" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEIAoAAgEAAIICAAAAQAUEAEAAABAAAQAQAgAAJAA=</HashCode>
+      <FileName>Models\Bot.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ProjectPoker.Models.Player" Collapsed="true">
+    <Position X="9.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAoAAgEAAIICAAAAQAQAAAAAABAAAAAQAgAABAA=</HashCode>
+      <FileName>Models\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="ProjectPoker.IPlayer" Collapsed="true">
+    <Position X="4" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAoAAgEAAIICAAAAQAQAAAAAABAAAAAAAgAABAA=</HashCode>
+      <FileName>IPlayer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Table" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="PokerCards" />
+    </ShowAsCollectionAssociation>
+  </Interface>
+  <Enum Name="Poker.Suit">
+    <Position X="9.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAABAAAAAAAAAIAAAAAAAAAACA=</HashCode>
+      <FileName>Models\Suit.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Poker.FaceValue">
+    <Position X="9.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAggAAAEAAEAIAAAAAFBAAAAAgAAAgAAEE=</HashCode>
+      <FileName>Models\Value.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ProjectPoker.Hands">
+    <Position X="9.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAgkAAAAAAAAEQAACAQAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>WinningHand.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

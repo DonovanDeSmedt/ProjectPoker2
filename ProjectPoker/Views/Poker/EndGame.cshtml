@@ -1,0 +1,164 @@
+﻿@using System.Web.UI.WebControls
+@using Microsoft.Ajax.Utilities
+@using Newtonsoft.Json
+@using ProjectPoker.Controllers
+@using ProjectPoker.Models
+@using ProjectPoker.ViewModels
+@model ProjectPoker.Models.Poker
+
+@{
+    ViewBag.Title = "Pokerroom";
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@Model.ActivePlayer.Name</title>
+    <link href="~/Content/poker.css" rel="stylesheet" />
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+</head>
+<body>
+    <section id="endGame">
+        <div class="container">
+            <div class="row" id="upperRow">
+                <div class="col-md-3 col-sm-3 col-xs-3"></div>
+                @for (int i = 1; i < 4; i++)
+                {
+                    <div class="col-md-2 col-sm-2 col-xs-2">
+                        @if ((i - 1) < @Model.ListBots.Count)
+                        {
+                            <p class="nameTag @(Model.ListBots[i-1].Folded ? "folded":"") @(Model.ListBots[i-1].Winner ? "winner" : "")">@Model.ListBots[i - 1].Name</p>
+                            foreach (var card in Model.ListBots[i-1].PokerCards)
+                            {
+                                <img class="pokerCard @(Model.ListBots[i-1].Folded ? "folded":"")" src="~/Content/Cards/@(((((int) card.Suit - 1)*13) + (int) card.FaceValue)).png" alt="Pokercard" />
+                            }
+                            <p class="nameTag @(Model.ListBots[i - 1].Folded ? "folded" : "")">@String.Format("{0:C}", @Model.ListBots[i - 1].Money)</p>
+                            <p class="nameTag @(Model.ListBots[i-1].Folded ? "folded":"prizeMoney")">@String.Format("+{0:C}", @Model.ListBots[i - 1].PrizeMoney)</p>
+                        }
+                        else
+                        {
+                            <img class="chair" src="~/Content/Images/chairT.gif" alt="sofa" />
+                        }
+                    </div>
+                }
+                <div class="col-md-3 col-sm-3 col-xs-3"></div>
+            </div>
+            <div class="row" id="middleRow">
+                <div class="col-md-2 col-sm-2 col-xs-2 cardsMiddleRow">
+                    @if (@Model.ListBots.Count > 6)
+                    {
+                        <p class="nameTag @(Model.ListBots[6].Folded ? "folded" : "") @(Model.ListBots[6].Winner ? "winner" : "")">@Model.ListBots[6].Name</p>
+                        foreach (var card in Model.ListBots[6].PokerCards)
+                        {
+                            <img class="pokerCard @(Model.ListBots[6].Folded ? "folded":"")  @(Model.ListBots[6].Winner ? "winner":"")" src="~/Content/Cards/@(((((int) card.Suit - 1)*13) + (int) card.FaceValue)).png" alt="Pokercard" />
+                        }
+                        <p class="nameTag @(Model.ListBots[6].Folded ? "folded" : "")">@String.Format("{0:C}", @Model.ListBots[6].Money)</p>
+                        <p class="nameTag @(Model.ListBots[6].Folded ? "folded":"prizeMoney")">@String.Format("+{0:C}", @Model.ListBots[6].PrizeMoney)</p>
+                    }
+                    else
+                    {
+                        <img class="chair" src="~/Content/Images/chairL.gif" alt="sofa" />
+                    }
+                    
+                </div>
+                <div class="col-md-8 col-sm-8 col-xs-8" id="table">
+                    <h2>Won by @Model.WinningHand.ToString()</h2>
+                    @foreach (var card in @Model.Table.Pokercards)
+                    {
+                        if (card.FaceUp)
+                        {
+                            <img class="pokerCard" src="~/Content/Cards/@(((((int) card.Suit - 1)*13) + (int) card.FaceValue)).png" alt="Pokercard" />
+                        }
+                        else
+                        {
+                            <img class="pokerCard" src="~/Content/Cards/backside.png" />
+                        }
+                    }
+                    <h2>Money: €@Model.Table.TableMoney</h2>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs)2">
+                    @if (@Model.ListBots.Count > 3)
+                    {
+                        <p class="nameTag @(Model.ListBots[3].Folded ? "folded" : "") @(Model.ListBots[3].Winner ? "winner" : "")">@Model.ListBots[3].Name</p>
+                        foreach (var card in Model.ListBots[3].PokerCards)
+                        {
+                            <img class="pokerCard @(Model.ListBots[3].Folded ? "folded":"")  @(Model.ListBots[3].Winner ? "winner":"")" src="~/Content/Cards/@(((((int) card.Suit - 1)*13) + (int) card.FaceValue)).png" alt="Pokercard" />
+                        }
+                        <p class="nameTag @(Model.ListBots[3].Folded ? "folded" : "")">@String.Format("{0:C}", @Model.ListBots[3].Money)</p>
+                        <p class="nameTag @(Model.ListBots[3].Folded ? "folded":"prizeMoney")">@String.Format("+{0:C}", @Model.ListBots[3].PrizeMoney)</p>
+                    }
+                    else
+                    {
+                        <img class="chair" src="~/Content/Images/chairR.gif" alt="sofa" />
+                    }
+
+                </div>
+            </div>
+            <div class="row" id="underRow">
+                <div class="col-md-3 col-sm-3 col-xs-3"></div>
+                <div class="col-md-2 col-sm-3 col-xs-3">
+
+                    @if (@Model.ListBots.Count > 5)
+                    {
+                        foreach (var card in Model.ListBots[5].PokerCards)
+                        {
+                            <img class="pokerCard @(Model.ListBots[5].Folded ? "folded":"")  @(Model.ListBots[5].Winner ? "winner":"")" src="~/Content/Cards/@(((((int) card.Suit - 1)*13) + (int) card.FaceValue)).png" alt="Pokercard" />
+                        }
+                        <p class="nameTag @(Model.ListBots[5].Folded ? "folded" : "") @(Model.ListBots[5].Winner ? "winner" : "")">@Model.ListBots[5].Name</p>
+                        <p class="nameTag @(Model.ListBots[5].Folded ? "folded" : "")">@String.Format("{0:C}", @Model.ListBots[5].Money)</p>
+                        <p class="nameTag @(Model.ListBots[5].Folded ? "folded":"prizeMoney")">@String.Format("+{0:C}", @Model.ListBots[5].PrizeMoney)</p>
+                    }
+                    else
+                    {
+                        <img class="chair" src="~/Content/Images/chairB.gif" alt="sofa" />
+                    }
+
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-2">
+                        <p class="nameTag @(Model.getPlayer().Winner ? "winner":"")">@Model.getPlayer().Name</p>
+                    <div class="hand">
+                        @foreach (var card in Model.getPlayer().PokerCards)
+                        {
+                            <img class="pokerCard @(Model.getPlayer().Folded ? "folded":"")  @(Model.getPlayer().Winner ? "winner":"")" src="~/Content/Cards/@(((((int) card.Suit - 1)*13) + (int) card.FaceValue)).png" alt="Pokercard" />
+                        }
+                        <p class="nameTag @(Model.getPlayer().Folded ? "folded" : "")">@String.Format("{0:C}", @Model.getPlayer().Money)</p>
+                        <p class="nameTag @(Model.getPlayer().Folded ? "folded":"prizeMoney")">@String.Format("+{0:C}", @Model.getPlayer().PrizeMoney)</p>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-2">
+
+                    @if (@Model.ListBots.Count > 4)
+                    {
+                        foreach (var card in Model.ListBots[4].PokerCards)
+                        {
+                            <img class="pokerCard @(Model.ListBots[4].Folded ? "folded":"")  @(Model.ListBots[4].Winner ? "winner":"")" src="~/Content/Cards/@(((((int) card.Suit - 1)*13) + (int) card.FaceValue)).png" alt="Pokercard" />
+                        }
+                        <p class="nameTag @(Model.ListBots[4].Folded ? "folded" : "") @(Model.ListBots[4].Winner ? "winner" : "")">@Model.ListBots[4].Name</p>
+                        <p class="nameTag @(Model.ListBots[4].Folded ? "folded" : "")">@String.Format("{0:C}", @Model.ListBots[4].Money)</p>
+                        <p class="nameTag @(Model.ListBots[4].Folded ? "folded":"prizeMoney")">@String.Format("+{0:C}", @Model.ListBots[4].PrizeMoney)</p>
+                    }
+                    else
+                    {
+                        <img class="chair" src="~/Content/Images/chairB.gif" alt="sofa" />
+                    }
+
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-3"></div>
+            </div>
+        </div>
+    </section>
+<section id="playControls">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                @Html.ActionLink("Play next round", "NextRound")
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

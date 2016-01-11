@@ -1,0 +1,52 @@
+﻿@using System.Activities.Expressions
+@using ProjectPoker.Models
+@{
+    ViewBag.Title = "Home Page";
+}
+<section id="homePage">
+    <section class="home-intro">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="../../Content/Images/pc.png" class="img-responsive"/>
+            </div>
+            <div class="col-md-8">
+                <h1>Project Poker</h1>
+                <p class="lead">An online poker game you can play on your own</p>
+                <ul class="homeLinks">                   
+                        <li>
+                            <a href="/Poker/Index" class="btn btn-default-inverse btn-lg" id="newGameButton">New Pokergame</a>
+                        </li>                
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section class="home-content">
+            <div class="row">
+                <div class="col-md-4 col-sm-4">
+                    <h2>Texas Holdem Poker</h2>
+                    <p>
+                        This poker game is based on Texas Holdem Poker. As a result of this, it also also uses their rules.
+                    </p>
+                    <p>
+                        <a class="btn btn-default" href="http://www.pokerlistings.com/poker-rules-texas-holdem" target="blank">Learn more about it &raquo;</a>
+                    </p>
+                </div>
+                <div class="col-md-4  col-sm-4">
+                    <h2>Intelligence </h2>
+                    <p>
+                        As part of the computer opponents, the intelligence behind it is written in an as realistic way as possible.
+                    </p>
+                    <p>
+                        <a class="btn btn-default" href="http://paginas.fe.up.pt/~niadr/PUBLICATIONS/LIACC_publications_2011_12/pdf/CN10_Estimating_Probability_Winning_LFT.pdf" target="blank">Learn more &raquo;</a>
+                    </p>
+                </div>
+                <div class="col-md-4  col-sm-4">
+                    <h2>Play with Facebook</h2>
+                    <p>You can easely use your Facebook account to keep track of your progress and see your personal stats.</p>
+                    <p>
+                        <a class="btn btn-default" href="">Sign in &raquo;</a>
+                    </p>
+                </div>
+            </div>
+    </section>
+</section>

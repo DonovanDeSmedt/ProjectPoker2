@@ -1,0 +1,55 @@
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Texas Holdem Poker", "Index", "Home", new { area = "" }, new { @class = "navbar-brand",@id = "brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav pull-right">
+                    @if (Session["state"] == "Playing")
+                    {
+                        <li class="title">@Html.ActionLink("Home", "Index", "Home")</li>
+                    }
+                    @if (Session["state"] == "Home")
+                    {
+                        <li class="title">@Html.ActionLink("Play", "Index", "Poker")</li>
+                    }
+                    
+                </ul>
+                <!--Hier komt de _loginPartials-->
+            </div>
+        </div>
+    </div>
+<div class="container">
+    
+        @if (TempData["message"] != null)
+        {
+            <div class="alert alert-danger">@TempData["message"]</div>
+        }
+    @RenderBody()
+    <hr/>
+    <footer>
+        <p>&copy; @DateTime.Now.Year - Project Poker</p>
+    </footer>
+</div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

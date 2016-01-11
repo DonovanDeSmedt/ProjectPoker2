@@ -1,0 +1,210 @@
+﻿@using ProjectPoker.Models
+@model ProjectPoker.Models.Poker
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section id="playGround">
+    <div class="container">
+        <div class="row" id="upperRow">
+            <div class="col-md-3 col-sm-3 col-xs-3"></div>
+            @for (int i = 0; i < 3; i++)
+            {
+                <div class="col-md-2 col-sm-2 col-xs-2">
+                    @if ((i) < @Model.ListBots.Count)
+                    {
+                        if ((Model.Players.IndexOf(Model.ActivePlayer) == i))
+                        {
+                            <p class="nameTag activePlayer">@Model.ListBots[i].Name</p>
+                        }
+                        else
+                        {
+                            <p class="nameTag @(Model.ListBots[i].Folded ? "folded" : "")">@Model.ListBots[i].Name</p>
+                        }
+                        <img class="chair" src="~/Content/Images/chairT.gif" alt="sofa" />
+                            <p class="nameTag @(Model.ListBots[i].Folded ? "folded" : "")">@String.Format("{0:C}", @Model.ListBots[i].Money)</p>
+                            <p class="nameTag @(Model.ListBots[i].Folded ? "folded":"currentBet")">@String.Format("{0:C}", @Model.ListBots[i].CurrentBet)</p>
+                    }
+                    else
+                    {
+                        <img class="chair unused" src="~/Content/Images/chairT.gif" alt="sofa" />
+                    }
+                </div>
+            }
+        </div>
+        <div class="row" id="middleRow">
+            <div class="col-md-2 col-sm-2 col-xs-2">
+                @if (@Model.ListBots.Count > 6)
+                {
+                    if (Model.Players.IndexOf(Model.ActivePlayer) == 7)
+                    {
+                        <p class="nameTag activePlayer">@Model.ListBots[6].Name</p>
+                    }
+                    else
+                    {
+                        <p class="nameTag @(Model.ListBots[6].Folded ? "folded":"")">@Model.ListBots[6].Name</p>
+                    }
+                    <img class="chair" src="~/Content/Images/chairL.gif" alt="sofa" />
+                        <p class="nameTag @(Model.ListBots[6].Folded ? "folded" : "")">@String.Format("{0:C}", @Model.ListBots[6].Money)</p>
+                        <p class="nameTag @(Model.ListBots[6].Folded ? "folded" : "currentBet")">@String.Format("{0:C}", @Model.ListBots[6].CurrentBet)</p>
+                }
+                else
+                {
+                    <img class="chair unused" src="~/Content/Images/chairL.gif" alt="sofa" />
+                }
+            </div>
+            <div class="col-md-8 col-sm-8 col-xs-8" id="table">
+                <div class="tableCards">
+                    @foreach (var card in @Model.Table.Pokercards)
+                    {
+                        if (card.FaceUp)
+                        {
+                            <img class="pokerCard" src="~/Content/Cards/@(((((int)card.Suit - 1) * 13) + (int)card.FaceValue)).png" alt="Pokercard" />
+                        }
+                        else
+                        {
+                            <img class="pokerCard" src="~/Content/Cards/backside.png" />
+                        }
+                    }
+                </div>
+                <h2>Money: €@Model.Table.TableMoney</h2>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-2">
+                @if (@Model.ListBots.Count > 3)
+                {
+                    if (Model.Players.IndexOf(Model.ActivePlayer) == 3 && Model.ActivePlayer.GetType() == typeof(Bot))
+                    {
+                        <p class="nameTag activePlayer">@Model.ListBots[3].Name</p>
+                    }
+                    else
+                    {
+                        <p class="nameTag @(Model.ListBots[3].Folded ? "folded":"")">@Model.ListBots[3].Name</p>
+                    }
+                    <img class="chair" src="~/Content/Images/chairR.gif" alt="sofa" />
+                        <p class="nameTag @(Model.ListBots[3].Folded ? "folded" : "")">@String.Format("{0:C}", @Model.ListBots[3].Money)</p>
+                        <p class="nameTag @(Model.ListBots[3].Folded ? "folded":"currentBet")">@String.Format("{0:C}", @Model.ListBots[3].CurrentBet)</p>
+                }
+                else
+                {
+                    <img class="chair unused" src="~/Content/Images/chairR.gif" alt="sofa" />
+                }
+
+            </div>
+        </div>
+        <div class="row" id="underRow">
+            <div class="col-md-3 col-sm-3 col-xs-3"></div>
+            <div class="col-md-2 col-sm-2 col-xs-2">
+
+                @if (@Model.ListBots.Count > 5)
+                {
+
+                    if (Model.Players.IndexOf(Model.ActivePlayer) == 6 && Model.ActivePlayer.GetType() == typeof(Bot))
+                    {
+                        <img class="chair" src="~/Content/Images/chairB.gif" alt="sofa" />
+                            <p class="nameTag activePlayer">@Model.ListBots[5].Name</p>
+                    }
+                    else
+                    {
+                        <img class="chair @(Model.ListBots[5].Folded ? "folded" : "")" src="~/Content/Images/chairB.gif" alt="sofa" />
+                            <p class="nameTag @(Model.ListBots[5].Folded ? "folded" : "")">@Model.ListBots[5].Name</p>
+                    }
+                    <p class="nameTag @(Model.ListBots[5].Folded ? "folded" : "")">@String.Format("{0:C}", @Model.ListBots[5].Money)</p>
+                        <p class="nameTag @(Model.ListBots[5].Folded ? "folded" : "currentBet")">@String.Format("{0:C}", @Model.ListBots[5].CurrentBet)</p>
+                }
+                else
+                {
+                    <img class="chair unused" src="~/Content/Images/chairB.gif" alt="sofa" />
+                }
+
+
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-2">
+                @if (Model.ActivePlayer.GetType() == typeof(ActivePlayer))
+                {
+                    <p class="nameTag activePlayer">@Model.getPlayer().Name</p>
+                }
+                else
+                {
+                    <p class="nameTag">@Model.getPlayer().Name</p>
+                }
+                <div class="hand">
+                    @foreach (var card in Model.getPlayer().PokerCards)
+                    {
+                        <img class="pokerCard @(Model.getPlayer().Folded ? "folded" : "")" src="~/Content/Cards/@(((((int) card.Suit - 1)*13) + (int) card.FaceValue)).png" alt="Pokercard" />
+                    }
+                    <p class="nameTag @(Model.getPlayer().Folded ? "folded" : "")">@String.Format("{0:C}", @Model.getPlayer().Money)</p>
+                    <p class="nameTag @(Model.getPlayer().Folded ? "folded" : "currentBet")">@String.Format("{0:C}", @Model.getPlayer().CurrentBet)</p>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-2">
+
+                @if (@Model.ListBots.Count > 4)
+                {
+
+                    if (Model.Players.IndexOf(Model.ActivePlayer) == 4 && Model.ActivePlayer.GetType() == typeof(Bot))
+                    {
+                        <img class="chair" src="~/Content/Images/chairB.gif" alt="sofa" />
+                            <p class="nameTag activePlayer">@Model.ListBots[4].Name</p>
+                    }
+                    else
+                    {
+                        <img class="chair @(Model.ListBots[4].Folded ? "folded" : "")" src="~/Content/Images/chairB.gif" alt="sofa" />
+                            <p class="nameTag @(Model.ListBots[4].Folded ? "folded" : "")">@Model.ListBots[4].Name</p>
+                    }
+                    <p class="nameTag @(Model.ListBots[4].Folded ? "folded" : "")">@String.Format("{0:C}", @Model.ListBots[4].Money)</p>
+                        <p class="nameTag @(Model.ListBots[4].Folded ? "folded" : "currentBet")">@String.Format("{0:C}", @Model.ListBots[4].CurrentBet)</p>
+                }
+                else
+                {
+                    <img class="chair unused" src="~/Content/Images/chairB.gif" alt="sofa" />
+                }
+
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-3"></div>
+        </div>
+    </div>
+</section>
+<div id="PokerView"></div>
+<section id="playControls">
+    <div class="container">
+        <div class="row">
+            @*@@Html.ActionLink("Bot", "BotDecision", null, null, new {@id = "bot", @style = "display: none"})*@
+            <div class="col-md-offset-3 col-md-2 col-sm-offset-3 col-sm-2 col-xs-4">
+                @if (Model.Table.CurrentBet == 0 || Model.ActivePlayer.CurrentBet == Model.Table.CurrentBet)
+                {
+                    @Html.ActionLink("Check", null, null, null, new { @class = "pull-right actionButton", @id = "checkButton" })
+                }
+                else
+                {
+                    @Html.ActionLink("Call " + (Model.Table.CurrentBet - Model.ActivePlayer.CurrentBet), null, null, null, new { @class = "pull-right actionButton", @id = "callButton" })
+                }
+            </div>
+
+            <div class="col-md-1 col-sm-1 col-xs-2">
+                @Html.ActionLink("Fold", null, null, new { @class = "actionButton", @id = "foldButton" })
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-6">
+                @using (Html.BeginForm("Bet", "Poker"))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <input type="submit" @(Model.Table.CurrentBet == 0 ? "value=Bet" : "value=Raise") class="btn btn-default actionButton" id="betButton" />
+                            @Html.Editor("amount", new { htmlAttributes = new { @class = "form-control col-md-1 col-sm-1", @Value = @Model.Table.CurrentBet == 0 ? "enter amount" : @Model.Table.CurrentBet.ToString(), type = "number" } })
+                            @*@@Html.ValidationMessageFor(model => model.AmountOfBots, "", new {@class = "text-danger"})*@
+
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col-md-3 col-sm-3 hidden-xs Errors">
+                <div id="slider"></div>
+            </div>
+
+        </div>
+    </div>
+</section>
+@section scripts
+    {
+    <script src="~/Scripts/PokerScripts/pokerScript.js"></script>
+}
