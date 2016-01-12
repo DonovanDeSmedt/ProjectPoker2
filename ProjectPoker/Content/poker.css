@@ -1,4 +1,4 @@
-﻿body {
+body {
     background-color: #efefef !important;
     padding-top: 0;
    font-family: 'Raleway', sans-serif;
@@ -277,18 +277,35 @@ th {
     #playControls .form-control {
         display: inline-block;
     }
-
+    .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a{
+        color: white;
+    }
+    .home-title {
+        text-align: center;
+    }
     .chair {
         width: 88%;
     }
+    #newGameButton {
+        margin-left: 0;
+    }
     .pokerCard {
-        width: 35px;
+        width: 53px;
     }
     #table h2 {
         font-size: 1.35em;
     }
     .nameTag{
         font-size: 1em;
+    }
+    .home-content .col-md-4 {
+        text-align: center;
+        padding-bottom: 2em;
+    }
+}
+@media(max-width: 560px) {
+    .pokerCard {
+        width: 35px;
     }
 }
 @media(min-width: 768px) {
@@ -335,9 +352,6 @@ th {
     margin: 3em 0;
 }
 }
-@media (min-width: 1000px) {
-    
-}
 #slider{
     border-width: 1px;
     border-style: solid;
@@ -382,3 +396,4 @@ th {
     height: 100%;
     border-radius: 25px;
 }
+home
