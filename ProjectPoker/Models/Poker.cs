@@ -26,12 +26,22 @@ namespace ProjectPoker.Models
         public Poker(IList<IPlayer> players)
         {
             InitVariables();
+            List<IPlayer> deletePlayer = new List<IPlayer>();
             Players = players;
             foreach (var p in Players)
             {
+                if (p.Money == 0)
+                {
+                    if (p.GetType() == typeof(ActivePlayer))
+                    {
+                        throw new InvalidOperationException("You lost all your money, please leave the table!");
+                    }
+                    deletePlayer.Add(p);
+                }
                 p.CurrentBet = 0;
                 p.Table = Table;
             }
+            deletePlayer.ForEach(p => Players.Remove(p));
             InitGame();
         }
 
