@@ -116,8 +116,17 @@ namespace ProjectPoker.Controllers
         public ActionResult NextRound(Poker poker)
         {
             IList<IPlayer> players = poker.Players;
-            Poker newPoker = new Poker(players);
-            newPoker.PrepareForNextRound();
+            Poker newPoker;
+            try
+            {
+                newPoker = new Poker(players);
+                newPoker.PrepareForNextRound();
+            }
+            catch (Exception e)
+            {
+                TempData["message"] = $"{e.Message}";
+                return View("EndGame", poker);
+            }
             
             HttpContext.Session["Poker"] = newPoker;
             return View("Create", newPoker);
