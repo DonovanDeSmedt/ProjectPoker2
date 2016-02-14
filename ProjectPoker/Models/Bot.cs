@@ -13,7 +13,6 @@ namespace ProjectPoker.Models
 {
     public class Bot : IPlayer
     {
-        private string username;
         private Hands previousHand = Hands.HighestCard;
         private IList<PokerCard> allCards;
         private Calculations.WinningHand winningHand;
@@ -50,6 +49,7 @@ namespace ProjectPoker.Models
         public int CurrentBet { get; set; }
         public int PrizeMoney { get; set; }
         public IList<PokerCard> WinningCards { get; set; }
+        public IList<IPlayer> Opponents { get; set; }
 
         public void AddCard(PokerCard card)
         {

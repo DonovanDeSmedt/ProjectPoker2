@@ -1,0 +1,49 @@
+﻿
+@using System.Web.Optimization
+@model ProjectPoker.ViewModels.PlayerViewModel
+
+@{
+    ViewBag.Title = "Pokerroom";
+}
+
+<div class="container">
+    @using (Html.BeginForm())
+    {
+
+        <div class="page-header">
+            <h2>Play poker against up to 7 computer bots</h2>
+        </div>
+        <div class="body-content">
+            <p>When you lack other players to play against, you can simply play against a computer bot that plays just as good
+            or even better than your friends.</p>
+            <p>Want to beat your friends? Train against computer bots first!</p>
+        </div>
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2 col-sm-3" })
+                <div class="col-md-10 col-sm-9">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.LabelFor(m => m.AmountOfBots, htmlAttributes: new { @class = "control-label col-md-2 col-sm-3" })
+                <div class="col-md-10 col-sm-9">
+                    @Html.EditorFor(model => model.AmountOfBots, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.AmountOfBots, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10 col-sm-offset-3 col-sm-9">
+                <input type="submit" value="Start new game" class="btn btn-default" />
+            </div>
+        </div>
+    }
+</div>
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}

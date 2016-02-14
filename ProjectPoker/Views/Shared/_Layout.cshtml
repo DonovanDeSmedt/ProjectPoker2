@@ -20,15 +20,15 @@
                 </button>
                 @Html.ActionLink("Texas Holdem Poker", "Index", "Home", new { area = "" }, new { @class = "navbar-brand",@id = "brand" })
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav pull-right">
+            <div class="navbar-collapse collapse navbar-right">
+                <ul class="nav navbar-nav">
                     @if (Session["state"] == "Playing")
                     {
                         <li class="title">@Html.ActionLink("Home", "Index", "Home")</li>
                     }
                     @if (Session["state"] == "Home")
                     {
-                        <li class="title">@Html.ActionLink("Play", "Index", "Poker")</li>
+                        <li class="title">@Html.ActionLink("Play", "IndexGeneral", "Poker")</li>
                     }
                     
                 </ul>

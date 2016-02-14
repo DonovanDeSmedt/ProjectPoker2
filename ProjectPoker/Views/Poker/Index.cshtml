@@ -1,40 +1,72 @@
 ﻿@using System.Web.Optimization
 @model ProjectPoker.ViewModels.PlayerViewModel
-
 @{
     ViewBag.Title = "Pokerroom";
 }
-
 <div class="container">
-    @using (Html.BeginForm())
-    {
-
-        <div class="form-horizontal">
-            <div class="form-group">
-                @Html.LabelFor(model => model.Name, htmlAttributes: new {@class = "control-label col-md-2 col-sm-3"})
-                <div class="col-md-10 col-sm-9">
-                    @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})
-                    @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+    <div class="row">
+        <div id="info"></div>
+    </div>
+    <div class="col-md-6">
+        <div class="page-header">
+            <h2>SinglePlayer</h2>
+        </div>
+        @using (Html.BeginForm())
+        {
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
+                    <div class="col-md-9 col-sm-9">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-horizontal">
-            <div class="form-group">
-                @Html.LabelFor(m => m.AmountOfBots, htmlAttributes: new {@class = "control-label col-md-2 col-sm-3"})
-                <div class="col-md-10 col-sm-9">
-                    @Html.EditorFor(model => model.AmountOfBots, new {htmlAttributes = new {@class = "form-control"}})
-                    @Html.ValidationMessageFor(model => model.AmountOfBots, "", new {@class = "text-danger"})
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.AmountOfBots, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
+                    <div class="col-md-9 col-sm-9">
+                        @Html.EditorFor(model => model.AmountOfBots, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.AmountOfBots, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10 col-sm-offset-3 col-sm-9">
-                <input type="submit" value="Start new game" class="btn btn-default"/>
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-9">
+                    <input type="submit" value="Start new game" class="btn btn-default" id="singleplayer" />
+                </div>
             </div>
-        </div>
-    }
+        }
+    </div>
+    <div class="col-md-6">
+        @using (Html.BeginForm("IndexMultiplayer", "Poker"))
+        {
+            <div class="page-header">
+                <h2>Multiplayer</h2>
+            </div>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new {@class = "control-label col-md-2 col-sm-3"})
+                    <div class="col-md-10 col-sm-9">
+                        @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <p>Instead of playing against computer bots, you can play against friends.</p>
+            </div>
+            <div class="form-group">
+                <div class="col-md-5">
+                    <input type="submit" value="Find opponenets" class="btn btn-default" id="multiplayer" />
+                </div>
+            </div>
+        }
+    </div>
 </div>
-@section Scripts 
+@section Scripts
 {
-   @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryval")
+
 }
+

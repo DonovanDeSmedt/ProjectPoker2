@@ -13,9 +13,13 @@
                 <h1>Project Poker</h1>
                 <p class="lead">An online poker game you can play on your own</p>
                 <ul class="homeLinks">                   
-                        <li>
-                            <a href="/Poker/Index" class="btn btn-default-inverse btn-lg" id="newGameButton">New Pokergame</a>
-                        </li>                
+                    <li>
+                        <a href="/Poker/Index" class="btn btn-default-inverse btn-lg">Singleplayer</a>
+                    </li>
+                    <li>Or</li>
+                    <li>
+                        <a href="/Poker/IndexMultiplayer" class="btn btn-default-inverse btn-lg">Multiplayer</a>
+                    </li>               
                 </ul>
             </div>
         </div>
@@ -41,12 +45,16 @@
                     </p>
                 </div>
                 <div class="col-md-4  col-sm-4">
-                    <h2>Play with Facebook</h2>
-                    <p>You can easely use your Facebook account to keep track of your progress and see your personal stats.</p>
+                    <h2>Play against friends</h2>
+                    <p>Tired of playing against computer bots? Challange your friends to play a game of Texas Holdem Poker.</p>
                     <p>
-                        <a class="btn btn-default" href="">Sign in &raquo;</a>
+                        <a class="btn btn-default" href="/Poker/IndexMultiplayer">Multiplayer &raquo;</a>
                     </p>
                 </div>
             </div>
     </section>
 </section>
+@section scripts
+    {
+    <script src="~/Scripts/PokerScripts/serverScript.js"></script>
+}

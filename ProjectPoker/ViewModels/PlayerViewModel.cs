@@ -33,4 +33,14 @@ namespace ProjectPoker.ViewModels
             Fold = fold;
         }
     }
+    public class MultiplayerViewModel
+    {
+        public string Name { get; set; }
+        public int Money { get; set; }
+        public MultiplayerViewModel(string name, int money)
+        {
+            Name = name;
+            Money = money;
+        }
+    }
 }

@@ -1,0 +1,47 @@
+﻿@using System.Web.UI.WebControls
+@using Microsoft.Ajax.Utilities
+@using Newtonsoft.Json
+@using ProjectPoker.Controllers
+@using ProjectPoker.Models
+@using ProjectPoker.ViewModels
+@model ProjectPoker.Models.Poker
+
+@{
+    ViewBag.Title = "Pokerroom";
+}
+
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <link href="~/Content/poker.css" rel="stylesheet" />
+</head>
+<body id="body">
+    <div class="row">
+        <div class="container">
+            <div id="info">
+            </div>
+        </div>
+        <div class="container">
+            <h2>Lobby</h2>
+            <table id="lobby">
+                @*<tr>
+                        <th>Name</th>
+                        <th>Amount of money</th>
+                        <th>Time joined</th>
+                    </tr>*@
+            </table>
+            <br />
+            <div id="startButton" class="btn btn-default" style="display: none">Start Poker</div>
+        </div>
+
+    </div>
+
+    @section scripts
+    {
+        <script src="~/Scripts/PokerScripts/pokerScriptMultiplayer.js"></script>
+    }
+</body>
+</html>

@@ -5,17 +5,15 @@ using System.Web.Services;
 using System.Web.Services.Protocols;
 using System.ComponentModel;
 using System.Linq;
-using ProjectPoker;
 using ProjectPoker.Models;
 
 namespace ProjectPoker.Models
 {
     public class Poker
     {
-        private int indexActivePlayer;
-        private int startIndex;
-        private bool preFlop = true;
-        private int rollingIndex = 0;
+        //private int StartIndex;
+        //private bool PreFlop = true;
+        //private int RollingIndex = 0;
         public Poker()
         {
             InitVariables();
@@ -59,6 +57,8 @@ namespace ProjectPoker.Models
             Table = new Table();
             Deck = new Deck();
             Players = new List<IPlayer>();
+            RollingIndex = 0;
+            PreFlop = true;
         }
         public void InitGame()
         {
@@ -106,35 +106,48 @@ namespace ProjectPoker.Models
             Players[smallBlindIndex].Bet(5);
             Players[bigBlindIndex].IsBigBlind = true;
             Players[bigBlindIndex].Bet(10);
-            startIndex = bigBlindIndex + 1 == Players.Count ? 0 : bigBlindIndex + 1;
-            ActivePlayer = Players[startIndex];
-            indexActivePlayer = startIndex + 1;
+            StartIndex = bigBlindIndex + 1 == Players.Count ? 0 : bigBlindIndex + 1;
+            ActivePlayer = Players[StartIndex];
+            IndexActivePlayer = StartIndex + 1;
         }
         public virtual Deck Deck { get; private set; }
 
-        public virtual Table Table { get; private set; }
+        public virtual Table Table { get; set; }
         public IList<IPlayer> ListBots { get; private set; }
-        public bool IsEndGame { get; private set; }
+        public bool IsEndGame { get; set; }
+        public int IndexActivePlayer { get; set; }
+        public int StartIndex { get; set; }
+        public int RollingIndex { get; set; }
+        public bool PreFlop { get; set; }
+        public bool IsServer { get; set; }
         public Hands WinningHand { get; set; }
         public IList<IPlayer> WinningPlayers { get; set; }
 
         public int SeatNrPlayer
         {
-            get { return Players.FirstOrDefault(p => p.GetType() == typeof(ActivePlayer)).SeatNr; }
+            get
+            {
+                return Players.Count > 0 ? Players.FirstOrDefault(p => p.GetType() == typeof(ActivePlayer)).SeatNr : 0;
+            }
         }
 
         public void NewGame()
         {
 
         }
-        public IPlayer ActivePlayer { get; private set; }
+        public IPlayer ActivePlayer { get; set; }
+        public IPlayer Host { get; set; }
 
-
-        public virtual IList<IPlayer> Players { get; private set; }
+        public virtual IList<IPlayer> Players { get; set; }
 
         public IPlayer getPlayer()
         {
-            return Players.First(p => p.GetType() == typeof(ActivePlayer));
+            //return ActivePlayer;
+            if (Host == null)
+            {
+                return Players.First(p => p.GetType() == typeof(ActivePlayer));
+            }
+            return Host;
         }
         public void AddNewPlayer(string name)
         {
@@ -162,7 +175,11 @@ namespace ProjectPoker.Models
 
         public void AddExistingPlayer(IPlayer player)
         {
-
+            IPlayer p = new ActivePlayer(player.Name, Table, Players.Count + 1, player.Money);
+            p.AddCard(Deck.Draw());
+            p.AddCard(Deck.Draw());
+            p.TurnAllCards();
+            Players.Add(p);
         }
         public void AddNewBot(string name)
         {
@@ -201,12 +218,12 @@ namespace ProjectPoker.Models
             // Eerst wordt er gekeken of de vorige player gefold heeft.
             // Zoja, dan wordt hij overgeslagen.
 
-            while (Players[(indexActivePlayer) % Players.Count].Folded)
+            while (Players[(IndexActivePlayer) % Players.Count].Folded)
             {
-                indexActivePlayer++;
-                rollingIndex++;
+                IndexActivePlayer++;
+                RollingIndex++;
             }
-            rollingIndex++;
+            RollingIndex++;
 
 
 
@@ -215,16 +232,16 @@ namespace ProjectPoker.Models
             int j = Players.Count(p => !p.Folded);
             int x = Players.Count(p => p.Folded);
             // normaal moet het rollingindex % players.count zijn dit levert problemen op
-            if ((rollingIndex >= Players.Count) && (Players.Count(p => (p.CurrentBet == Table.CurrentBet && !p.Folded)) == Players.Count(p => !p.Folded)))
+            if ((RollingIndex >= Players.Count) && (Players.Count(p => (p.CurrentBet == Table.CurrentBet && !p.Folded)) == Players.Count(p => !p.Folded)))
             {
                 try
                 {
                     Table.CurrentBet = 0;
                     // Na de eerste ronde worden de 3 org kaarten op de tafel omgedraaid               
-                    if (preFlop)
+                    if (PreFlop)
                     {
                         Table.TurnAllCards();
-                        preFlop = false;
+                        PreFlop = false;
                     }
                     else
                     {
@@ -236,23 +253,25 @@ namespace ProjectPoker.Models
                     {
                         p.CurrentBet = 0;
                     }
-                    indexActivePlayer = startIndex;
-                    rollingIndex = 0;
+                    //IndexActivePlayer = StartIndex;
+                    //TODO
+                    // ALS P5(SERVER) CHECKT EN P1 BET --> P5 MOET CALLEN = er wordt een loop gemaakt.
+                    // Telkens wanneer er een loop wordt gemaakt moet de StartIndex + 1 gedaan worden.
+                    RollingIndex = 0;
                     //Wanneer er op een gefolde speler gespawnd wordt, zal deze overgeslagen worden.
-                    while (Players[(indexActivePlayer) % Players.Count].Folded)
+                    while (Players[(IndexActivePlayer) % Players.Count].Folded)
                     {
-                        indexActivePlayer++;
-                        rollingIndex++;
+                        IndexActivePlayer++;
+                        RollingIndex++;
                     }
-                    
+
                 }
-                catch (InvalidOperationException e)
+                catch (InvalidOperationException )
                 {
                     EndGame();
                 }
             }
-            ActivePlayer = Players[indexActivePlayer++ % Players.Count];
-
+            ActivePlayer = Players[IndexActivePlayer++ % Players.Count];
         }
 
         public void Deal()
@@ -278,12 +297,11 @@ namespace ProjectPoker.Models
         }
         public void EndGame()
         {
-            // Deze methode zal zorgen dat de seatNr terug op elkaar volgen, moest een player het spel verlaten.
-                
+            // Formatplayers zal zorgen dat de seatNr terug op elkaar volgen, moest een player het spel verlaten.                   
             SetWinner();
             HandMoneyToPlayers();
-            FormatPlayers();
             IsEndGame = true;
+            FormatPlayers();
             //PrepareForNextRound();
         }
 
@@ -341,7 +359,7 @@ namespace ProjectPoker.Models
             int amountOfWinners = WinningPlayers.Count;
             foreach (var player in WinningPlayers)
             {
-                player.AddMoney(Table.TableMoney/amountOfWinners);
+                player.AddMoney(Table.TableMoney / amountOfWinners);
             }
         }
         public void PrepareForNextRound()

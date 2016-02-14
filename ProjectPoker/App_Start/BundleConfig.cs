@@ -12,6 +12,8 @@ namespace ProjectPoker
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/jquery-ui.js",
                         "~/Scripts/pageScript.js",
+                        "~/signalr/hubs",
+                        "~/Scripts/jquery.signalR-2.2.0.js",
                         "~/Scripts/poker.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(

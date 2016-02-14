@@ -11,13 +11,12 @@ namespace ProjectPoker.Models
     public interface IPlayer
     {
         IList<PokerCard> PokerCards { get; set; }
-         
+
         Table Table { get; set; }
 
         string Name { get; set; }
         int Money { get; set; }
         int SeatNr { get; set; }
-
         bool Folded { get; set; }
         bool Winner { get; set; }
         Hands CurrentHand { get; set; }
@@ -27,11 +26,12 @@ namespace ProjectPoker.Models
         int BigBlind { get; }
         int CurrentBet { get; set; }
         int PrizeMoney { get; set; }
-        IList<PokerCard> WinningCards { get; set; } 
+        IList<PokerCard> WinningCards { get; set; }
+        IList<IPlayer> Opponents { get; set; }
         void AddCard(PokerCard card);
 
         void AddMoney(int money);
-        
+
 
         void Bet(int amount);
 

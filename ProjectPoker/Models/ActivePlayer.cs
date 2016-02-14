@@ -5,6 +5,7 @@ using System.Web.Services;
 using System.Web.Services.Protocols;
 using System.ComponentModel;
 using System.Linq;
+using ProjectPoker.Models;
 using ProjectPoker.Models.Calculations;
 
 namespace ProjectPoker.Models
@@ -12,11 +13,8 @@ namespace ProjectPoker.Models
     public class ActivePlayer : IPlayer
     {
         //private IList<PokerCard> pokerCards; 
-        private string username;
-        private string password;
 
-
-        public ActivePlayer(string name, Table table,int seatNr)
+        public ActivePlayer(string name, Table table, int seatNr)
         {
             Name = name;
             SeatNr = seatNr;
@@ -26,14 +24,29 @@ namespace ProjectPoker.Models
             Folded = false;
         }
 
-        public string Name { get;set; }
+        public ActivePlayer(string name, Table table, int seatNr, int money)
+        {
+            Name = name;
+            SeatNr = seatNr;
+            Table = table;
+            PokerCards = new List<PokerCard>();
+            Money = money;
+            Folded = false;
+        }
+        public ActivePlayer()
+        {
+
+        }
+
+        public string Name { get; set; }
+        public string ConnectionId { get; set; }
         public int Money { get; set; }
         public int SeatNr { get; set; }
         public IList<PokerCard> PokerCards { get; set; }
         public Table Table { get; set; }
-
-
-        public bool Folded {get ; set; }
+        public string Email { get; set; }
+        public bool LookingForOpponent { get; set; }
+        public bool Folded { get; set; }
 
         public bool Winner { get; set; }
 
@@ -46,11 +59,12 @@ namespace ProjectPoker.Models
         public int CurrentBet { get; set; }
         public int PrizeMoney { get; set; }
         public IList<PokerCard> WinningCards { get; set; }
-        
+        public IList<IPlayer> Opponents { get; set; }
+        public string JoinDateTime { get; set; }
 
         public void AddCard(PokerCard card)
         {
-            if(PokerCards.Count > 2)
+            if (PokerCards.Count > 2)
                 throw new InvalidOperationException("Pokerplayer cannot have more than 2 cards in his hand");
             PokerCards.Add(card);
         }
@@ -65,7 +79,7 @@ namespace ProjectPoker.Models
         {
             if (amount > Money)
             {
-                throw new InvalidOperationException("You cannot bet more money than you have, which is "+Money);
+                throw new InvalidOperationException("You cannot bet more money than you have, which is " + Money);
             }
             Table.Raise(amount);
             Money -= (amount - CurrentBet);
@@ -88,7 +102,7 @@ namespace ProjectPoker.Models
                 {
                     Money -= amount;
                     CurrentBet += amount;
-                }               
+                }
             }
         }
 

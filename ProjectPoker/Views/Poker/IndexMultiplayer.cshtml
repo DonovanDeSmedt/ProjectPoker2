@@ -1,0 +1,47 @@
+﻿@using System.Web.Optimization
+@model ProjectPoker.ViewModels.PlayerViewModel
+
+@{
+    ViewBag.Title = "Pokerroom";
+}
+
+<div class="container">
+    <div class="row">
+        <div id="info"></div>
+    </div>
+    @using (Html.BeginForm("IndexMultiplayer", "Poker"))
+    {
+        <div class="page-header">
+            <h2>Play poker against 7 other players</h2>
+        </div>
+        <div class="body-content">
+              <p>Besides playing on your own against other computers, you can now also play against your friends.</p>
+              <p>Join a lobby up to 8 players</p>
+        </div>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-1 col-sm-2" })
+                    <div class="col-md-11 col-sm-10">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        //Looking for other players button
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-offset-1 col-md-5 col-sm-offset-2 col-sm-10">
+                    <input type="submit" value="Find opponenets" class="btn btn-default" id="multiplayer" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+

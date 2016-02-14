@@ -20,7 +20,7 @@ namespace ProjectPoker.Models.Calculations
         {
             bool[] winningHands = new bool[9];
             currentHand = Hands.HighestCard;
-            bool pair = false, twoPair = false, threeOfAKind = false, straight = false, flush = false, fourOfAKind = false, straightFlush = false;
+            bool pair = false, twoPair = false, threeOfAKind = false, straight = false, flush = false;
             WinningCards = GetHighestCard();
             pair = IsPair();
             if (pair)

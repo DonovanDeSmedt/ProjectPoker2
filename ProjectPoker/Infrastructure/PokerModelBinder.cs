@@ -6,15 +6,15 @@ namespace ProjectPoker.Infrastructure
 {
     public class PokerModelBinder : IModelBinder
     {
-        private const string cartSessionKey = "Poker";
+        private const string Key = "Poker";
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
-            Poker poker = controllerContext.HttpContext.Session[cartSessionKey] as Poker;
+            Poker poker = controllerContext.HttpContext.Session[Key] as Poker;
 
             if (poker == null)
             {
                 poker = new Poker();
-                controllerContext.HttpContext.Session[cartSessionKey] = poker;
+                controllerContext.HttpContext.Session[Key] = poker;
             }
             return poker;
         }

@@ -22,7 +22,6 @@ namespace ProjectPoker.Models.Calculations
             allCards = cards;
             int noemer1 = (52 - allCards.Count - ((amount - 1) * 2));
             int noemer2 = (52 - allCards.Count - 1 - ((amount - 1) * 2));
-            double chance = 0;
             switch (allCards.Count)
             {
 
