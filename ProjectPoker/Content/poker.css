@@ -5,7 +5,7 @@ body {
 }
 @font-face {
     font-family: Sansation-Regular;
-    src: url("../../../ProjectPoker2/ProjectPoker2/fonts/Sansation-Regular.ttf");
+    src: url("~/fonts/Sansation-Regular.ttf");
 }
 h1, h2 {
     font-family: 'Raleway', sans-serif;
@@ -380,7 +380,7 @@ th {
     width: 25px;
     height: 25px;
     cursor: pointer;
-    background: url('../../../ProjectPoker2/ProjectPoker2/Content/Images/handle.png') no-repeat 50% 50%;
+    background: url('Images/handle.png') no-repeat 50% 50%;
     border-radius: 50%;
     font-weight: bold;
     color: #1C94C4;
