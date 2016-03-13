@@ -265,7 +265,7 @@ namespace ProjectPoker.Controllers
             catch (InvalidOperationException e)
             {
                 TempData["message"] = $"{e.Message}";
-                return View("Multiplayer", poker);
+                return PartialView("Multiplayer", poker);
             }
             return PartialView("Multiplayer", poker);
         }
